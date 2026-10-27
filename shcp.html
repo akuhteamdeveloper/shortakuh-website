@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Pelajari ShortAkuH Capsule Package (SHCP), fungsi, pemeriksaan keamanan, dan panduan pemasangannya.">
+<meta name="theme-color" content="#0b0b0b">
+<link rel="icon" href="assets/shortakuh-logo.png" type="image/png">
+<title>SHCP — ShortAkuH Capsule Package | ShortAkuH</title>
+
+<style>
+:root {
+  --bg: #0b0b0b;
+  --panel: #121212;
+  --panel2: #191919;
+  --line: #2b2b2b;
+  --text: #f7f7f7;
+  --muted: #aaa;
+  --orange: #ff8c00;
+  --orange2: #ffad32;
+  --green: #56e39f;
+  --max: 1160px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 80% 5%, rgba(255,140,0,.10), transparent 34%),
+    var(--bg);
+  color: var(--text);
+  font: 16px/1.7 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+a { color: inherit; text-decoration: none; }
+
+button, a { -webkit-tap-highlight-color: transparent; }
+
+.container {
+  width: min(var(--max), calc(100% - 40px));
+  margin: 0 auto;
+}
+
+/* NAVIGATION */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(10,10,10,.94);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-inner {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 23px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+.logo img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  border-radius: 9px;
+}
+
+.logo span span { color: var(--orange); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  color: #bbb;
+  font-size: 14px;
+}
+
+.nav-links a:hover { color: var(--orange); }
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 12px 20px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--panel2);
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+  transition: transform .2s, background .2s, border-color .2s;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  border-color: var(--orange);
+}
+
+.button-primary {
+  background: var(--orange);
+  color: #111;
+  border-color: var(--orange);
+}
+
+.button-primary:hover { background: var(--orange2); }
+
+/* HERO */
+.hero { padding: 82px 0 86px; }
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  align-items: center;
+  gap: 70px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 2px;
+  background: var(--orange);
+}
+
+h1 {
+  margin: 20px 0;
+  font-size: clamp(40px, 5.5vw, 68px);
+  line-height: 1.04;
+  letter-spacing: -3px;
+}
+
+h1 span { color: var(--orange); }
+
+.hero-description {
+  max-width: 580px;
+  color: #bbb;
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 27px;
+}
+
+.hero-note {
+  margin-top: 15px;
+  color: #777;
+  font-size: 12px;
+}
+
+/* ANIMATED LOGO */
+.visual {
+  min-height: 390px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 35px;
+  border: 1px solid #303030;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,140,0,.14), transparent 45%),
+    linear-gradient(145deg, #171717, #090909);
+  box-shadow: 0 25px 80px rgba(0,0,0,.3);
+}
+
+.visual::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(255,140,0,.14);
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+.logo-animation {
+  width: min(220px, 70%);
+  height: auto;
+  object-fit: contain;
+  border-radius: 30px;
+  animation: floatLogo 3.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 24px rgba(255,140,0,.22));
+}
+
+.visual::after {
+  content: "";
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border: 1px solid rgba(255,140,0,.15);
+  border-radius: 50%;
+  animation: pulseRing 4s ease-out infinite;
+  pointer-events: none;
+}
+
+.visual-label {
+  position: absolute;
+  bottom: 20px;
+  color: #888;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+@keyframes floatLogo {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-12px) scale(1.035); }
+}
+
+@keyframes pulseRing {
+  0% { transform: scale(.8); opacity: .65; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+
+/* GENERAL SECTIONS */
+section.content-section {
+  padding: 78px 0;
+  border-top: 1px solid #202020;
+}
+
+.section-heading {
+  max-width: 760px;
+  margin-bottom: 34px;
+}
+
+.section-heading h2 {
+  margin: 12px 0;
+  font-size: clamp(29px, 4vw, 44px);
+  line-height: 1.18;
+  letter-spacing: -1.5px;
+}
+
+.section-heading p { color: var(--muted); }
+
+.orange { color: var(--orange); }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.card {
+  padding: 25px;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: linear-gradient(145deg, #171717, #101010);
+}
+
+.card-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+  border-radius: 13px;
+  background: rgba(255,140,0,.12);
+  color: var(--orange);
+  font-size: 22px;
+}
+
+.card h3 { margin: 0 0 8px; font-size: 18px; }
+
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* CAPSULE PREVIEW */
+.capsule-panel {
+  padding: 28px;
+  border: 1px solid #343434;
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse at 90% 0%, rgba(255,140,0,.08), transparent 40%),
+    var(--panel);
+}
+
+.capsule-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.status {
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.capsule-file {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 22px;
+  padding: 17px;
+  border: 1px solid #333;
+  border-radius: 14px;
+  background: #1a1a1a;
+}
+
+.file-icon {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(255,140,0,.12);
+  color: var(--orange);
+  font-weight: 900;
+  font-size: 13px;
+}
+
+.file-details { flex: 1; min-width: 0; }
+
+.file-details strong {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.file-details small { color: #999; }
+
+.file-badge {
+  padding: 5px 10px;
+  border: 1px solid #805000;
+  border-radius: 30px;
+  color: var(--orange);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+/* INSTALL STEPS */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  counter-reset: install;
+}
+
+.step {
+  position: relative;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #121212;
+  counter-increment: install;
+}
+
+.step-number {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background: var(--orange);
+  color: #111;
+  font-weight: 900;
+}
+
+.step h3 { margin: 0 0 8px; }
+
+.step p { margin: 0; color: var(--muted); font-size: 14px; }
+
+/* SAFETY NOTICE */
+.notice {
+  padding: 22px 24px;
+  border: 1px solid rgba(255,140,0,.35);
+  border-left: 4px solid var(--orange);
+  border-radius: 12px;
+  background: rgba(255,140,0,.06);
+  color: #ccc;
+}
+
+.notice strong { color: var(--orange); }
+
+/* FAQ */
+.faq-list { display: grid; gap: 12px; }
+
+details {
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #121212;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 750;
+}
+
+details p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* FOOTER */
+footer {
+  padding: 30px 0;
+  border-top: 1px solid var(--line);
+  color: #888;
+  font-size: 12px;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.footer-links { display: flex; gap: 20px; }
+
+.footer-links a:hover { color: var(--orange); }
+
+@media (max-width: 850px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 35px; }
+  .visual { min-height: 310px; }
+  .cards, .steps { grid-template-columns: 1fr; }
+  .nav-links { gap: 14px; }
+}
+
+@media (max-width: 560px) {
+  .container { width: min(100% - 28px, var(--max)); }
+  .nav-inner { min-height: 66px; gap: 10px; }
+  .logo { font-size: 19px; gap: 8px; }
+  .logo img { width: 32px; height: 32px; }
+  .nav-links { display: none; }
+  .nav-inner > .button { min-height: 40px; padding: 8px 13px; }
+  .hero { padding: 55px 0 60px; }
+  h1 { letter-spacing: -2px; }
+  .hero-description { font-size: 15px; }
+  .hero-actions .button { width: 100%; }
+  section.content-section { padding: 55px 0; }
+  .capsule-panel { padding: 18px; }
+  .capsule-file { flex-wrap: wrap; }
+  .file-badge { margin-left: 66px; }
+  .footer-inner { align-items: flex-start; flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="container nav-inner">
+    <a class="logo" href="index.html" aria-label="ShortAkuH beranda">
+      <img src="assets/shortakuh-logo.png" alt="Logo ShortAkuH">
+      <span>Short<span>AkuH</span></span>
+    </a>
+
+    <nav class="nav-links" aria-label="Navigasi utama">
+      <a href="#shcp">Tentang SHCP</a>
+      <a href="#install">Cara Install</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <a class="button button-primary" href="index.html">Beranda ↗</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">SHORTAKUH CAPSULE PACKAGE</div>
+        <h1>Extend Your Workflow.<br><span>One Capsule at a Time.</span></h1>
+        <p class="hero-description">
+          SHCP adalah format paket capsule untuk ekosistem ShortAkuH.
+          Halaman ini membantu Anda memahami fungsi capsule, memeriksa
+          paket yang diperoleh, dan mengikuti panduan pemasangan dengan
+          lebih terarah.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#install">Pelajari Cara Install ↘</a>
+          <a class="button" href="#shcp">Apa itu SHCP?</a>
+        </div>
+
+        <p class="hero-note">Panduan SHCP · ShortAkuH ecosystem</p>
+      </div>
+
+      <div class="visual" aria-label="Logo ShortAkuH dengan animasi">
+        <img
+          class="logo-animation"
+          src="assets/shortakuh-logo.png"
+          alt="Logo ShortAkuH"
+          width="220"
+          height="220"
+        >
+        <div class="visual-label">ShortAkuH Capsule Package</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section" id="shcp">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">MENGENAL SHCP</div>
+        <h2>Apa itu <span class="orange">SHCP?</span></h2>
+        <p>
+          SHCP merupakan format paket capsule yang dirancang untuk
+          mengemas kemampuan tambahan dalam ekosistem ShortAkuH.
+          Setiap paket dapat memiliki identitas dan kemampuan berbeda,
+          sesuai implementasi capsule tersebut.
+        </p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="card-icon">◇</div>
+          <h3>Paket Capsule</h3>
+          <p>
+            File dengan ekstensi <code>.shcp</code> yang digunakan
+            sebagai paket capsule. Periksa nama dan asal file sebelum digunakan.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">⌘</div>
+          <h3>Kemampuan Tambahan</h3>
+          <p>
+            Capsule dapat menyediakan kemampuan tertentu sesuai
+            manifest, adapter, dan dukungan aplikasi yang tersedia.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">✓</div>
+          <h3>Periksa Sebelum Install</h3>
+          <p>
+            Pastikan paket berasal dari sumber tepercaya dan sesuai
+            dengan versi ShortAkuH yang Anda gunakan.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">CONTOH FILE</div>
+        <h2>Mengenali file <span class="orange">.shcp</span></h2>
+        <p>
+          Berikut ilustrasi tampilan sebuah paket capsule.
+          Nama dan isi file sebenarnya bergantung pada paket yang Anda peroleh.
+        </p>
+      </div>
+
+      <div class="capsule-panel">
+        <div class="capsule-top">
+          <span>SHORTAKUH · CAPSULE PACKAGE</span>
+          <span class="status">● PACKAGE FORMAT</span>
+        </div>
+
+        <div class="capsule-file">
+          <div class="file-icon">SHCP</div>
+          <div class="file-details">
+            <strong>NamaPaket.shcp</strong>
+            <small>Contoh nama file capsule</small>
+          </div>
+          <span class="file-badge">.SHCP</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section" id="install">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">PANDUAN PEMASANGAN</div>
+        <h2>Mulai dengan <span class="orange">3 langkah</span></h2>
+        <p>
+          Ikuti petunjuk resmi yang tersedia untuk capsule dan versi aplikasi Anda.
+          Nama menu instalasi dapat berbeda sesuai versi ShortAkuH.
+        </p>
+      </div>
+
+      <div class="steps">
+        <article class="step">
+          <div class="step-number">01</div>
+          <h3>Dapatkan Capsule</h3>
+          <p>
+            Unduh file <code>.shcp</code> dari sumber resmi atau sumber
+            yang Anda percayai. Jangan membuka paket yang asal-usulnya tidak jelas.
+          </p>
+        </article>
+
+        <article class="step">
+          <div class="step-number">02</div>
+          <h3>Periksa Paket</h3>
+          <p>
+            Periksa nama file, dokumentasi, versi yang didukung, dan
+            informasi tanda tangan digital jika disediakan. Jangan menganggap
+            paket aman hanya karena memiliki ekstensi .shcp.
+          </p>
+        </article>
+
+        <article class="step">
+          <div class="step-number">03</div>
+          <h3>Gunakan Fitur Install Capsule</h3>
+          <p>
+            Buka ShortAkuH dan ikuti petunjuk instalasi yang disediakan
+            oleh versi aplikasi Anda. Jika tidak ada menu yang sesuai,
+            rujuk dokumentasi paket atau dukungan resmi sebelum melanjutkan.
+          </p>
+        </article>
+      </div>
+
+      <div style="height:22px"></div>
+
+      <div class="notice">
+        <strong>Catatan penting:</strong>
+        panduan ini menjelaskan alur umum, bukan jaminan bahwa semua file
+        SHCP dapat dipasang langsung. Gunakan hanya metode instalasi yang
+        didukung oleh versi ShortAkuH dan capsule yang bersangkutan.
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">KEAMANAN</div>
+        <h2>Periksa sebelum <span class="orange">menggunakan</span></h2>
+        <p>
+          Perlakukan capsule seperti paket perangkat lunak lain:
+          verifikasi sumbernya dan jangan mengabaikan peringatan keamanan.
+        </p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="card-icon">01</div>
+          <h3>Sumber Tepercaya</h3>
+          <p>Unduh dari kanal resmi atau penerbit yang identitasnya dapat diverifikasi.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">02</div>
+          <h3>Integritas File</h3>
+          <p>Jika hash atau tanda tangan digital resmi tersedia, cocokkan sebelum instalasi.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">03</div>
+          <h3>Kompatibilitas</h3>
+          <p>Periksa versi aplikasi, izin yang diperlukan, dan dokumentasi capsule.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section" id="faq">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">FAQ</div>
+        <h2>Pertanyaan <span class="orange">umum</span></h2>
+      </div>
+
+      <div class="faq-list">
+        <details>
+          <summary>Apa kepanjangan SHCP?</summary>
+          <p>SHCP adalah ShortAkuH Capsule Package, format paket capsule dalam ekosistem ShortAkuH.</p>
+        </details>
+
+        <details>
+          <summary>Apakah semua file .shcp bisa langsung dipasang?</summary>
+          <p>Tidak selalu. Dukungan instalasi bergantung pada format paket, versi aplikasi, dan kemampuan installer yang tersedia.</p>
+        </details>
+
+        <details>
+          <summary>Bagaimana jika tombol Install Capsule tidak tersedia?</summary>
+          <p>Periksa dokumentasi versi aplikasi dan capsule. Jangan mencoba menjalankan isi paket secara manual tanpa instruksi resmi yang jelas.</p>
+        </details>
+
+        <details>
+          <summary>Apakah file capsule pasti aman?</summary>
+          <p>Tidak. Ekstensi file bukan jaminan keamanan. Pastikan sumbernya tepercaya dan lakukan verifikasi yang tersedia sebelum memasang.</p>
+        </details>
+
+        <details>
+          <summary>Di mana saya bisa mendapatkan ShortAkuH?</summary>
+          <p>Kunjungi halaman utama ShortAkuH untuk membuka tautan unduhan resmi yang tersedia.</p>
+        </details>
+      </div>
+
+      <div style="margin-top:28px">
+        <a class="button button-primary" href="index.html">Kembali ke ShortAkuH ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div>© 2026 ShortAkuH · Capsule Package Guide</div>
+    <div class="footer-links">
+      <a href="index.html">Beranda</a>
+      <a href="https://avora.id/akuhteamdeveloper" target="_blank" rel="noopener noreferrer">Akuh Products</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
