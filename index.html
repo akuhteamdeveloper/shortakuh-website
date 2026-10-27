@@ -1,16 +1,24 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ShortAkuH AI</title>
+    <meta name="description" content="ShortAkuH AI — aplikasi desktop untuk membantu membuat video Shorts dengan workflow yang sederhana dan pemrosesan lokal.">
+    <meta name="theme-color" content="#0b0b0b">
+
+    <title>ShortAkuH AI — AI Video Creator</title>
 
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -21,7 +29,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .page {
@@ -57,33 +65,67 @@
             color: #b8b8b8;
             font-size: clamp(17px, 2vw, 21px);
             margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Tombol download dan produk lain */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .download-button,
+        .secondary-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 52px;
+            padding: 16px 28px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 10px;
+            text-decoration: none;
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
         }
 
         .download-button {
-            display: inline-block;
-            padding: 16px 34px;
             background: #ff8c00;
             color: #000000;
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 700;
-            border-radius: 10px;
-            transition: 0.2s ease;
+            border: 1px solid #ff8c00;
             box-shadow: 0 0 30px rgba(255, 140, 0, 0.18);
         }
 
         .download-button:hover {
             background: #ffa500;
+            border-color: #ffa500;
             transform: translateY(-2px);
             box-shadow: 0 0 40px rgba(255, 140, 0, 0.35);
         }
 
-        .coming-soon {
+        .secondary-button {
+            background: #151515;
             color: #ff8c00;
-            font-size: 30px;
-            font-weight: 800;
-            letter-spacing: 4px;
-            margin-top: 24px;
+            border: 1px solid #ff8c00;
+        }
+
+        .secondary-button:hover {
+            background: #252525;
+            transform: translateY(-2px);
+            box-shadow: 0 0 24px rgba(255, 140, 0, 0.12);
+        }
+
+        .download-note {
+            color: #777777;
+            font-size: 12px;
+            margin-top: 14px;
+            line-height: 1.6;
         }
 
         .features {
@@ -95,7 +137,9 @@
         }
 
         .feature {
-            min-width: 160px;
+            flex: 1 1 160px;
+            max-width: 240px;
+            min-width: 0;
             padding: 18px 22px;
             background: #151515;
             border: 1px solid #292929;
@@ -112,17 +156,47 @@
         .feature span {
             color: #999999;
             font-size: 13px;
+            line-height: 1.5;
         }
 
         .footer {
             margin-top: 55px;
             color: #555555;
             font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer a {
+            color: #777777;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #ff8c00;
         }
 
         @media (max-width: 600px) {
             .page {
-                padding: 30px 18px;
+                padding: 36px 18px;
+            }
+
+            .brand {
+                margin-bottom: 24px;
+            }
+
+            h1 {
+                font-size: clamp(42px, 12vw, 64px);
+            }
+
+            .button-group {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .download-button,
+            .secondary-button {
+                width: 100%;
+                max-width: 340px;
             }
 
             .features {
@@ -131,12 +205,25 @@
             }
 
             .feature {
-                min-width: 140px;
-                padding: 15px;
+                flex: 1 1 100%;
+                max-width: 340px;
+                padding: 16px;
             }
 
             .footer {
                 margin-top: 40px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
             }
         }
     </style>
@@ -156,18 +243,33 @@
             Create Shorts Faster.
         </p>
 
-        <a
-            class="download-button"
-            href="https://avora.id/akuhteamdeveloper"
-        >
-            Download ShortAkuH
-        </a>
+        <div class="button-group">
 
-        <div class="coming-soon">
-            COMING SOON
+            <a
+                class="download-button"
+                href="https://github.com/akuhteamdeveloper/ShortAkuH-Releases/releases/latest/download/ShortAkuh_Window_0.6.4.2.zip"
+                aria-label="Download ShortAkuH AI untuk Windows"
+            >
+                Download ShortAkuH
+            </a>
+
+            <a
+                class="secondary-button"
+                href="https://avora.id/akuhteamdeveloper"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Cek produk lain di Avora"
+            >
+                Cek Produk Lain
+            </a>
+
         </div>
 
-        <section class="features">
+        <p class="download-note">
+            Windows desktop application · Free download
+        </p>
+
+        <section class="features" aria-label="Fitur ShortAkuH">
 
             <div class="feature">
                 <strong>⚡ Fast</strong>
@@ -186,9 +288,18 @@
 
         </section>
 
-        <div class="footer">
-            © 2026 ShortAkuH AI
-        </div>
+        <footer class="footer">
+            <p>© 2026 ShortAkuH AI</p>
+            <p>
+                <a
+                    href="https://shortakuh.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Powered by ShortAkuH
+                </a>
+            </p>
+        </footer>
 
     </main>
 
