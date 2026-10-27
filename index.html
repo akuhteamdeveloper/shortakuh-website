@@ -2,303 +2,1083 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="description" content="ShortAkuH — aplikasi desktop untuk membantu membuat video Shorts dengan workflow sederhana dan pemrosesan lokal.">
-    <meta name="theme-color" content="#0b0b0b">
+  <meta name="description"
+    content="ShortAkuH membantu membuat video Shorts melalui aplikasi desktop Windows dengan workflow sederhana dan pemrosesan lokal.">
 
-    <title>ShortAkuH — Video Creator</title>
+  <meta name="theme-color" content="#0b0b0b">
+  <link rel="icon" href="assets/shortakuh-logo.png" type="image/png">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  <title>ShortAkuH — Create More. Edit Less.</title>
 
-        html {
-            scroll-behavior: smooth;
-        }
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --surface: #121212;
+      --surface-2: #191919;
+      --line: #292929;
+      --text: #f7f7f7;
+      --muted: #a0a0a0;
+      --orange: #ff8c00;
+      --orange-light: #ffad32;
+      --max-width: 1160px;
+    }
 
-        body {
-            min-height: 100vh;
-            background: #0b0b0b;
-            color: #ffffff;
-            font-family: Arial, Helvetica, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow-x: hidden;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .page {
-            width: 100%;
-            max-width: 900px;
-            padding: 40px 24px;
-            text-align: center;
-        }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
 
-        .brand {
-            color: #ff8c00;
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            margin-bottom: 28px;
-        }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        h1 {
-            font-size: clamp(48px, 8vw, 86px);
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 20px;
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        h2 {
-            color: #ff8c00;
-            font-size: clamp(24px, 4vw, 38px);
-            font-weight: 700;
-            margin-bottom: 18px;
-        }
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        .tagline {
-            color: #b8b8b8;
-            font-size: clamp(17px, 2vw, 21px);
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
+    .container {
+      width: min(var(--max-width), calc(100% - 48px));
+      margin-inline: auto;
+    }
 
-        .button-group {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(11, 11, 11, .88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
 
-        .download-button,
-        .secondary-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 52px;
-            padding: 16px 28px;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: 10px;
-            text-decoration: none;
-            transition:
-                background 0.2s ease,
-                color 0.2s ease,
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
-        }
+    .nav-inner {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
 
-        .download-button {
-            background: #ff8c00;
-            color: #000000;
-            border: 1px solid #ff8c00;
-            box-shadow: 0 0 30px rgba(255, 140, 0, 0.18);
-        }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #ffffff;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -1.2px;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: color .2s ease;
+    }
 
-        .download-button:hover {
-            background: #ffa500;
-            border-color: #ffa500;
-            transform: translateY(-2px);
-            box-shadow: 0 0 40px rgba(255, 140, 0, 0.35);
-        }
+    .logo-image {
+      display: block;
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
 
-        .secondary-button {
-            background: #151515;
-            color: #ff8c00;
-            border: 1px solid #ff8c00;
-        }
+    .logo:hover {
+      color: var(--orange);
+    }
 
-        .secondary-button:hover {
-            background: #252525;
-            transform: translateY(-2px);
-            box-shadow: 0 0 24px rgba(255, 140, 0, 0.12);
-        }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      color: #b8b8b8;
+      font-size: 14px;
+    }
 
-        .download-note {
-            color: #777777;
-            font-size: 12px;
-            margin-top: 14px;
-            line-height: 1.6;
-        }
+    .nav-links a:hover {
+      color: white;
+    }
 
-        .features {
-            display: flex;
-            justify-content: center;
-            gap: 18px;
-            margin-top: 55px;
-            flex-wrap: wrap;
-        }
+    .nav-cta {
+      padding: 10px 17px;
+      border-radius: 8px;
+      color: #111;
+      background: var(--orange);
+      font-weight: 750;
+      white-space: nowrap;
+    }
 
-        .feature {
-            flex: 1 1 160px;
-            max-width: 240px;
-            min-width: 0;
-            padding: 18px 22px;
-            background: #151515;
-            border: 1px solid #292929;
-            border-radius: 10px;
-        }
+    .nav-cta:hover,
+    .button-primary:hover {
+      background: var(--orange-light);
+    }
 
-        .feature strong {
-            display: block;
-            color: #ff8c00;
-            font-size: 15px;
-            margin-bottom: 6px;
-        }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(ellipse at 75% 35%,
+          rgba(255,140,0,.105), transparent 43%),
+        linear-gradient(180deg, #0d0d0d, #0b0b0b);
+    }
 
-        .feature span {
-            color: #999999;
-            font-size: 13px;
-            line-height: 1.5;
-        }
+    .hero-grid {
+      min-height: 640px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 64px;
+      padding-block: 90px;
+    }
 
-        .footer {
-            margin-top: 55px;
-            color: #555555;
-            font-size: 12px;
-            line-height: 1.8;
-        }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 25px;
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
 
-        .footer a {
-            color: #777777;
-            text-decoration: none;
-        }
+    .eyebrow::before {
+      content: "";
+      width: 25px;
+      height: 2px;
+      background: var(--orange);
+    }
 
-        .footer a:hover {
-            color: #ff8c00;
-        }
+    h1 {
+      max-width: 620px;
+      font-size: clamp(48px, 6.1vw, 78px);
+      line-height: 1.04;
+      letter-spacing: -3.5px;
+      font-weight: 850;
+    }
 
-        @media (max-width: 600px) {
-            .page {
-                padding: 36px 18px;
-            }
+    h1 span {
+      color: var(--orange);
+    }
 
-            .brand {
-                margin-bottom: 24px;
-            }
+    .hero-description {
+      max-width: 500px;
+      margin-top: 25px;
+      color: #b2b2b2;
+      font-size: 17px;
+      line-height: 1.85;
+    }
 
-            h1 {
-                font-size: clamp(42px, 12vw, 64px);
-            }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
 
-            .button-group {
-                flex-direction: column;
-                width: 100%;
-            }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 14px 22px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 750;
+      transition: .2s ease;
+    }
 
-            .download-button,
-            .secondary-button {
-                width: 100%;
-                max-width: 340px;
-            }
+    .button-primary {
+      color: #111;
+      background: var(--orange);
+      box-shadow: 0 8px 35px rgba(255,140,0,.12);
+    }
 
-            .features {
-                gap: 10px;
-                margin-top: 40px;
-            }
+    .button-secondary {
+      color: #f4f4f4;
+      background: #171717;
+      border-color: #373737;
+    }
 
-            .feature {
-                flex: 1 1 100%;
-                max-width: 340px;
-                padding: 16px;
-            }
+    .button-secondary:hover {
+      border-color: var(--orange);
+      background: #202020;
+    }
 
-            .footer {
-                margin-top: 40px;
-            }
-        }
+    .download-caption {
+      margin-top: 15px;
+      color: #777;
+      font-size: 12px;
+    }
 
-        @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto;
-            }
+    /* Product preview illustration */
+    .product-frame {
+      position: relative;
+      padding: 12px;
+      border: 1px solid #343434;
+      border-radius: 16px;
+      background: #111;
+      box-shadow: 0 35px 100px rgba(0,0,0,.5);
+      transform: perspective(1200px) rotateY(-3deg);
+    }
 
-            *,
-            *::before,
-            *::after {
-                transition: none !important;
-            }
-        }
-    </style>
+    .hero-preview {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .product-preview {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .window-bar {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 5px 13px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4b4b4b;
+    }
+
+    .window-title {
+      margin-left: 10px;
+      color: #858585;
+      font-size: 11px;
+    }
+
+    .app-ui {
+      display: grid;
+      grid-template-columns: 105px 1fr;
+      min-height: 310px;
+      overflow: hidden;
+      border: 1px solid #292929;
+      border-radius: 9px;
+      background: #0c0c0c;
+    }
+
+    .app-sidebar {
+      padding: 16px 10px;
+      border-right: 1px solid #292929;
+      background: #121212;
+    }
+
+    .app-brand {
+      margin-bottom: 24px;
+      color: var(--orange);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: 1px;
+    }
+
+    .side-item {
+      margin-bottom: 9px;
+      padding: 8px 7px;
+      border-radius: 5px;
+      color: #929292;
+      font-size: 10px;
+    }
+
+    .side-item.active {
+      color: var(--orange);
+      background: #2a1b0b;
+    }
+
+    .app-main {
+      min-width: 0;
+      padding: 17px;
+    }
+
+    .app-heading {
+      font-size: 15px;
+      font-weight: 750;
+    }
+
+    .app-subheading {
+      margin-top: 4px;
+      color: #858585;
+      font-size: 10px;
+    }
+
+    .video-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 135px;
+      margin-top: 17px;
+      border: 1px dashed #484848;
+      border-radius: 7px;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(255,140,0,.10), transparent 65%),
+        #141414;
+    }
+
+    .play-symbol {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      padding-left: 3px;
+      border: 1px solid #555;
+      border-radius: 50%;
+      color: var(--orange);
+      font-size: 17px;
+    }
+
+    .app-progress {
+      height: 5px;
+      margin-top: 16px;
+      overflow: hidden;
+      border-radius: 10px;
+      background: #292929;
+    }
+
+    .app-progress span {
+      display: block;
+      width: 64%;
+      height: 100%;
+      background: var(--orange);
+    }
+
+    .app-status {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 9px;
+      color: #999;
+      font-size: 9px;
+    }
+
+    .preview-note {
+      margin-top: 12px;
+      color: #777;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .trust-strip {
+      border-bottom: 1px solid var(--line);
+      background: #0e0e0e;
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding-block: 27px;
+    }
+
+    .trust-item {
+      padding: 4px 20px;
+      text-align: center;
+      border-right: 1px solid #292929;
+    }
+
+    .trust-item:last-child {
+      border-right: 0;
+    }
+
+    .trust-item strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .trust-item span {
+      color: #858585;
+      font-size: 12px;
+    }
+
+    section.content-section {
+      padding-block: 100px;
+    }
+
+    .section-heading {
+      max-width: 680px;
+      margin-bottom: 45px;
+    }
+
+    .section-label {
+      color: var(--orange);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin-top: 12px;
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+    }
+
+    .section-description {
+      max-width: 580px;
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feature-card {
+      min-height: 210px;
+      padding: 27px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: linear-gradient(145deg, #151515, #101010);
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: #59401f;
+    }
+
+    .feature-icon {
+      display: grid;
+      place-items: center;
+      width: 43px;
+      height: 43px;
+      margin-bottom: 22px;
+      border: 1px solid #49331a;
+      border-radius: 10px;
+      background: #25190c;
+      color: var(--orange);
+      font-size: 19px;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 9px;
+      font-size: 17px;
+    }
+
+    .feature-card p {
+      color: #999;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .workflow {
+      background: #101010;
+      border-block: 1px solid var(--line);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .step-number {
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .step h3 {
+      margin-top: 12px;
+      font-size: 19px;
+    }
+
+    .step p {
+      margin-top: 8px;
+      color: #999;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .download-panel {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 35px;
+      padding: 42px;
+      border: 1px solid #3d2c17;
+      border-radius: 16px;
+      background:
+        radial-gradient(ellipse at 85% 30%,
+          rgba(255,140,0,.12), transparent 45%),
+        #131313;
+    }
+
+    .download-panel h2 {
+      font-size: clamp(30px, 4vw, 42px);
+    }
+
+    .download-panel p {
+      max-width: 600px;
+      margin-top: 12px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .platform-note {
+      margin-top: 15px;
+      color: #777;
+      font-size: 12px;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    details {
+      padding: 21px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    summary {
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    details p {
+      max-width: 750px;
+      padding-top: 13px;
+      color: #999;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .footer {
+      padding-block: 35px;
+      border-top: 1px solid var(--line);
+      color: #777;
+      font-size: 12px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #ddd;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+    }
+
+    .footer-brand img {
+      display: block;
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer a:hover {
+      color: var(--orange);
+    }
+
+    @media (max-width: 850px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+        padding-block: 75px;
+      }
+
+      .hero-copy {
+        max-width: 650px;
+      }
+
+      .product-frame {
+        max-width: 600px;
+        width: 100%;
+        margin-inline: auto;
+        transform: none;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .download-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: calc(100% - 36px);
+      }
+
+      .nav-inner {
+        min-height: 66px;
+      }
+
+      .logo {
+        gap: 7px;
+        font-size: 22px;
+        letter-spacing: -1px;
+      }
+
+      .logo-image {
+        width: 32px;
+        height: 32px;
+      }
+
+      .nav-links {
+        gap: 12px;
+        font-size: 12px;
+      }
+
+      .nav-links a:nth-child(2) {
+        display: none;
+      }
+
+      .nav-cta {
+        padding: 9px 11px;
+        font-size: 12px;
+      }
+
+      .hero-grid {
+        min-height: auto;
+        padding-block: 65px 55px;
+      }
+
+      h1 {
+        font-size: clamp(46px, 12vw, 64px);
+        letter-spacing: -2px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero-actions .button {
+        width: 100%;
+      }
+
+      .hero-preview {
+        width: 100%;
+      }
+
+      .product-frame {
+        padding: 8px;
+      }
+
+      .app-ui {
+        grid-template-columns: 82px 1fr;
+        min-height: 270px;
+      }
+
+      .app-sidebar {
+        padding: 12px 7px;
+      }
+
+      .app-main {
+        padding: 12px;
+      }
+
+      .video-placeholder {
+        min-height: 110px;
+      }
+
+      .trust-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .trust-item {
+        border-right: 0;
+      }
+
+      section.content-section {
+        padding-block: 70px;
+      }
+
+      .feature-grid,
+      .steps {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .feature-card {
+        min-height: auto;
+      }
+
+      .download-panel {
+        padding: 26px 22px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <main class="page">
 
-        <div class="brand">SHORTAKUH</div>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="logo" href="#" aria-label="ShortAkuH beranda"><img src="assets/shortakuh-logo.png" alt="" class="logo-image" width="40" height="40"><span>ShortAkuH</span></a>
 
-        <h1>ShortAkuH</h1>
+      <nav class="nav-links" aria-label="Navigasi utama">
+        <a href="#features">Fitur</a>
+        <a href="#workflow">Cara Kerja</a>
+        <a href="#faq">FAQ</a>
+      </nav>
 
-        <h2>Video Creator</h2>
+      <a class="nav-cta" href="#download">Download</a>
+    </div>
+  </header>
 
-        <p class="tagline">
-            Create Shorts Faster.
-        </p>
+  <main>
 
-        <div class="button-group">
+    <section class="hero">
+      <div class="container hero-grid">
 
-            <a
-                class="download-button"
-                href="https://github.com/akuhteamdeveloper/ShortAkuH-Releases/releases/latest/download/ShortAkuh_Window_0.6.4.2.zip"
-                aria-label="Download ShortAkuH untuk Windows"
-            >
-                Download ShortAkuH
+        <div class="hero-copy">
+          <div class="eyebrow">Desktop video workflow</div>
+
+          <h1>
+            Create More.<br>
+            <span>Edit Less.</span>
+          </h1>
+
+          <p class="hero-description">
+            Ubah workflow video menjadi lebih sederhana.
+            ShortAkuH membantu Anda membuat video Shorts
+            melalui aplikasi desktop Windows dengan pemrosesan lokal.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary"
+               href="https://github.com/akuhteamdeveloper/ShortAkuH-Releases/releases/latest/download/ShortAkuh_Window_0.6.4.2.zip">
+              Download ShortAkuH &nbsp; ↗
             </a>
 
-            <a
-                class="secondary-button"
-                href="https://avora.id/akuhteamdeveloper"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Cek produk lain di Avora"
-            >
-                Cek Produk Lain
+            <a class="button button-secondary"
+               href="https://avora.id/akuhteamdeveloper"
+               target="_blank"
+               rel="noopener noreferrer">
+              Explore AkuH Products
             </a>
+          </div>
+
+          <p class="download-caption">
+            Windows desktop · Free download
+          </p>
+        </div>
+
+        <!-- Screenshot aplikasi ShortAkuH asli -->
+        <div class="product-preview">
+          <div class="product-frame">
+            <img
+              class="hero-preview"
+              src="assets/shortakuh-preview.png"
+              alt="Tampilan aplikasi desktop ShortAkuH"
+              width="2324"
+              height="2332"
+              fetchpriority="high"
+            >
+          </div>
+          <p class="preview-note">Tampilan aplikasi ShortAkuH</p>
+        </div>
 
         </div>
 
-        <p class="download-note">
-            Windows desktop application · Free download
-        </p>
+      </div>
+    </section>
 
-        <section class="features" aria-label="Fitur ShortAkuH">
+    <section class="trust-strip" aria-label="Karakteristik aplikasi">
+      <div class="container trust-grid">
+        <div class="trust-item">
+          <strong>Desktop First</strong>
+          <span>Dibuat untuk Windows</span>
+        </div>
+        <div class="trust-item">
+          <strong>Local Processing</strong>
+          <span>Pemrosesan pada perangkat</span>
+        </div>
+        <div class="trust-item">
+          <strong>Simple Workflow</strong>
+          <span>Alur kerja lebih sederhana</span>
+        </div>
+      </div>
+    </section>
 
-            <div class="feature">
-                <strong>⚡ Fast</strong>
-                <span>Create Shorts Faster</span>
-            </div>
+    <section class="content-section" id="features">
+      <div class="container">
 
-            <div class="feature">
-                <strong>🎬 Simple</strong>
-                <span>Easy Video Workflow</span>
-            </div>
+        <div class="section-heading">
+          <div class="section-label">01 / Fitur</div>
+          <h2>Tools that fit your workflow.</h2>
+          <p class="section-description">
+            Fokus pada proses pembuatan video yang praktis,
+            dengan aplikasi desktop dan fitur yang dirancang
+            untuk membantu pekerjaan konten sehari-hari.
+          </p>
+        </div>
 
-            <div class="feature">
-                <strong>🔒 Local</strong>
-                <span>Desktop Processing</span>
-            </div>
-
-        </section>
-
-        <footer class="footer">
-            <p>© 2026 ShortAkuH</p>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Simple Workflow</h3>
             <p>
-                <a
-                    href="https://shortakuh.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Powered by ShortAkuH
-                </a>
+              Antarmuka desktop untuk membantu mengelola
+              proses pembuatan video secara lebih terstruktur.
             </p>
-        </footer>
+          </article>
 
-    </main>
+          <article class="feature-card">
+            <div class="feature-icon">✂</div>
+            <h3>Clip Segments</h3>
+            <p>
+              Bantu memilih segmen video untuk dijadikan
+              bagian dari workflow Shorts.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Local Processing</h3>
+            <p>
+              Pemrosesan inti dilakukan di komputer Anda,
+              sesuai kemampuan dan konfigurasi perangkat.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">▣</div>
+            <h3>Desktop Application</h3>
+            <p>
+              Aplikasi Windows yang dapat digunakan tanpa
+              harus menjadikan browser sebagai workspace utama.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">♫</div>
+            <h3>Audio Workflow</h3>
+            <p>
+              Mendukung alur kerja audio yang tersedia
+              pada versi aplikasi yang Anda gunakan.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">▶</div>
+            <h3>Made for Shorts</h3>
+            <p>
+              Dirancang untuk membantu kreator menyiapkan
+              video pendek dengan alur kerja yang praktis.
+            </p>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="content-section workflow" id="workflow">
+      <div class="container">
+
+        <div class="section-heading">
+          <div class="section-label">02 / Cara Kerja</div>
+          <h2>From video to your next Short.</h2>
+          <p class="section-description">
+            Mulai dari file video yang Anda miliki dan
+            gunakan workflow ShortAkuH untuk membantu
+            menyiapkan konten pendek.
+          </p>
+        </div>
+
+        <div class="steps">
+          <article class="step">
+            <div class="step-number">STEP 01</div>
+            <h3>Prepare your video</h3>
+            <p>
+              Siapkan dan pilih file video yang ingin
+              Anda proses di komputer.
+            </p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">STEP 02</div>
+            <h3>Process your content</h3>
+            <p>
+              Gunakan fitur yang tersedia untuk
+              membantu alur kerja pengolahan video.
+            </p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">STEP 03</div>
+            <h3>Prepare your Short</h3>
+            <p>
+              Periksa hasil pemrosesan dan siapkan
+              video untuk workflow publikasi Anda.
+            </p>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="content-section" id="download">
+      <div class="container">
+
+        <div class="download-panel">
+          <div>
+            <div class="section-label">03 / Get Started</div>
+            <h2>Meet your new video workflow.</h2>
+            <p>
+              Unduh ShortAkuH untuk Windows melalui
+              kanal rilis resmi. Periksa informasi versi
+              dan petunjuk instalasi sebelum digunakan.
+            </p>
+            <div class="platform-note">
+              Windows desktop · ZIP package · GitHub Releases
+            </div>
+          </div>
+
+          <div>
+            <a class="button button-primary"
+               href="https://github.com/akuhteamdeveloper/ShortAkuH-Releases/releases/latest/download/ShortAkuh_Window_0.6.4.2.zip">
+              Download for Windows ↗
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="content-section" id="faq">
+      <div class="container">
+
+        <div class="section-heading">
+          <div class="section-label">04 / FAQ</div>
+          <h2>Good to know.</h2>
+          <p class="section-description">
+            Informasi singkat sebelum mulai menggunakan ShortAkuH.
+          </p>
+        </div>
+
+        <div class="faq-list">
+          <details>
+            <summary>Apakah ShortAkuH gratis diunduh?</summary>
+            <p>
+              Tautan di halaman ini mengarah ke paket unduhan
+              yang saat ini dipublikasikan pada GitHub Releases.
+              Periksa keterangan lisensi dan fitur pada versi tersebut.
+            </p>
+          </details>
+
+          <details>
+            <summary>Sistem operasi apa yang didukung?</summary>
+            <p>
+              Halaman ini ditujukan untuk aplikasi desktop Windows.
+              Periksa dokumentasi rilis untuk persyaratan sistem
+              yang sesuai dengan versi yang Anda unduh.
+            </p>
+          </details>
+
+          <details>
+            <summary>Apakah video diproses secara lokal?</summary>
+            <p>
+              ShortAkuH dirancang dengan pendekatan local-first
+              untuk pemrosesan inti. Kebutuhan koneksi dan layanan
+              tambahan dapat bergantung pada fitur yang digunakan.
+            </p>
+          </details>
+
+          <details>
+            <summary>Di mana saya mendapatkan pembaruan?</summary>
+            <p>
+              Gunakan kanal GitHub Releases resmi untuk melihat
+              paket dan informasi rilis ShortAkuH terbaru.
+            </p>
+          </details>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="footer-brand"><img src="assets/shortakuh-logo.png" alt="" width="24" height="24"><span>ShortAkuH</span></div>
+        <p>© 2026 ShortAkuH. All rights reserved.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://shortakuh.com"
+           target="_blank" rel="noopener noreferrer">
+          Website
+        </a>
+        <a href="https://github.com/akuhteamdeveloper/ShortAkuH-Releases/releases"
+           target="_blank" rel="noopener noreferrer">
+          Releases
+        </a>
+        <a href="https://avora.id/akuhteamdeveloper"
+           target="_blank" rel="noopener noreferrer">
+          Other Products
+        </a>
+      </div>
+    </div>
+  </footer>
+
 </body>
 </html>
