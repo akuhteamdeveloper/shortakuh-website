@@ -558,6 +558,40 @@
       font-size: 12px;
     }
 
+    /* First-install SmartScreen guide */
+    .installation-guide {
+      padding-block: 90px;
+      border-block: 1px solid var(--line);
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(255,140,0,.08), transparent 55%),
+        #0e0e0e;
+    }
+
+    .installation-guide-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid #343434;
+      border-radius: 14px;
+      background: #151515;
+      box-shadow: 0 24px 70px rgba(0,0,0,.35);
+    }
+
+    .installation-guide-note {
+      margin-top: 18px;
+      padding: 16px 19px;
+      border: 1px solid #59401f;
+      border-radius: 10px;
+      color: #c5c5c5;
+      background: #17130e;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .installation-guide-note strong {
+      color: var(--orange);
+    }
+
     .faq-list {
       display: grid;
       gap: 0;
@@ -785,6 +819,7 @@
       <nav class="nav-links" aria-label="Navigasi utama">
         <a href="#features">Fitur</a>
         <a href="#workflow">Cara Kerja</a>
+        <a href="#installation-guide">Panduan Instalasi</a>
         <a href="#faq">FAQ</a>
         <a href="shcp.html">SHCP Guide</a>
       </nav>
@@ -1011,11 +1046,41 @@
       </div>
     </section>
 
+    <section class="installation-guide" id="installation-guide">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-label">04 / Panduan Instalasi</div>
+          <h2>Instalasi pertama kali di Windows.</h2>
+          <p class="section-description">
+            Jika Windows menampilkan Microsoft Defender SmartScreen saat Anda
+            membuka installer, ikuti petunjuk berikut untuk melanjutkan.
+          </p>
+        </div>
+
+        <img
+          class="installation-guide-image"
+          src="assets/shortakuh-smartscreen-guide.png"
+          alt="Panduan Windows SmartScreen: klik More info, lalu Run anyway"
+          width="1536"
+          height="1024"
+          loading="lazy"
+        >
+
+        <p class="installation-guide-note">
+          <strong>Catatan keamanan:</strong>
+          Pilih <b>Run anyway</b> hanya jika file installer berasal dari kanal
+          rilis resmi ShortAkuH dan Anda sudah memastikan file yang diunduh
+          sesuai dengan rilis yang dimaksud. Jika sumber file tidak jelas,
+          pilih <b>Don’t run</b>.
+        </p>
+      </div>
+    </section>
+
     <section class="content-section" id="faq">
       <div class="container">
 
         <div class="section-heading">
-          <div class="section-label">04 / FAQ</div>
+          <div class="section-label">05 / FAQ</div>
           <h2>Good to know.</h2>
           <p class="section-description">
             Informasi singkat sebelum mulai menggunakan ShortAkuH.
